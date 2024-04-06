@@ -6,6 +6,7 @@ const port = process.env.PORT;
 const config = require('./config');
 const userController = require('./Controller/user');
 const organizationFormController = require('./Controller/organization_form');
+const buildingFormController = require('./Controller/building_form');
 const isLoggedIn = require('./Middleware/verify_token');
 const checkAdmin = require('./Middleware/check_admin');
 
@@ -23,6 +24,12 @@ app.post('/login', userController.login);
 
 //Organization Form
 app.post('/applicationForm', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.createAndSaveForm);
+app.get('/getFormDetails/:formId', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.getByFormId);
+app.put('/updateForm/:formId', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.updateForm);
+app.delete('/deleteForm/:formId', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.deleteForm);
+
+//Building Form
+app.post('/buildingForm', isLoggedIn.isVerified, checkAdmin.isAdmin, buildingFormController.createAndSaveBuildingForm);
 
 app.listen(port,
     console.log(`Listening to port ${port}`)
