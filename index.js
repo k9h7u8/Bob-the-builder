@@ -12,7 +12,7 @@ const isLoggedIn = require('./Middleware/verify_token');
 const checkAdmin = require('./Middleware/check_admin');
 
 const app = express();
-app.use(cors);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
