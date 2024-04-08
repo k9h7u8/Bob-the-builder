@@ -26,10 +26,10 @@ app.post('/login', userController.login);
 app.post('/applicationForm', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.createAndSaveForm);
 app.get('/getFormDetails', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.getByAdminId);
 app.put('/updateForm', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.updateForm);
-app.delete('/deleteForm/:formId', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.deleteForm);
 
 //Building Form
 app.post('/buildingForm', isLoggedIn.isVerified, checkAdmin.isAdmin, buildingFormController.createAndSaveBuildingForm);
+app.get('/getBuildings', isLoggedIn.isVerified, checkAdmin.isAdmin, buildingFormController.getByAdminId);
 
 app.listen(port,
     console.log(`Listening to port ${port}`)
