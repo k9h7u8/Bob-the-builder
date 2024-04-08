@@ -80,7 +80,15 @@ const getByAdminId = async (req, res) => {
     });
 }
 
+const getById = async (req, res) => {
+    const formObject = await BuildingForm.find({ _id: req.params.buildingId }).then((data) => {
+        res.send(data);
+    }).catch(err => {
+        console.log(err);
+    });
+}
 module.exports = {
     createAndSaveBuildingForm,
-    getByAdminId
+    getByAdminId,
+    getById
 }
