@@ -70,14 +70,38 @@ const createAndSaveBuildingForm = async (req, res, next) => {
     });
 }
 
+// const getByAdminId = async (req, res) => {
+//     const token = req.headers.authorization.split(' ')[1];
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     const formObject = await BuildingForm.find({ admin_id: decoded.id }).then((data) => {
+//         res.send(data);
+//     }).catch(err => {
+//         console.log(err);
+//     });
+// }
+
 const getByAdminId = async (req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const formObject = await BuildingForm.find({ admin_id: decoded.id }).then((data) => {
-        res.send(data);
-    }).catch(err => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const formObjects = await BuildingForm.find({ admin_id: decoded.id });
+
+        // Extracting specific details like city and country from the formObjects
+        const extractedDetails = formObjects.map(form => {
+            return {
+                id: form._id,
+                Address: form.registeredAddress,
+                city: form.city,
+                country: form.country,
+                Building_use: form.building_use
+            };
+        });
+
+        res.send(extractedDetails);
+    } catch (err) {
         console.log(err);
-    });
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 const getById = async (req, res) => {
