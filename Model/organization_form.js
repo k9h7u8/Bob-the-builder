@@ -4,7 +4,8 @@ const validator = require('validator');
 const organizationFormSchema = new mongoose.Schema({
     admin_id: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        unique: true
     },
     building_name: {
         type: String,

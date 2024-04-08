@@ -24,8 +24,8 @@ app.post('/login', userController.login);
 
 //Organization Form
 app.post('/applicationForm', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.createAndSaveForm);
-app.get('/getFormDetails/:formId', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.getByFormId);
-app.put('/updateForm/:formId', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.updateForm);
+app.get('/getFormDetails', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.getByAdminId);
+app.put('/updateForm', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.updateForm);
 app.delete('/deleteForm/:formId', isLoggedIn.isVerified, checkAdmin.isAdmin, organizationFormController.deleteForm);
 
 //Building Form

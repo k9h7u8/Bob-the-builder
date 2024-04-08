@@ -24,8 +24,10 @@ const createAndSaveForm = async (req, res, next) => {
     });
 }
 
-const getByFormId = async (req, res) => {
-    const formObject = await OrganizationForm.find({ _id: req.params.formId }).then((data) => {
+const getByAdminId = async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const formObject = await OrganizationForm.find({ admin_id: decoded.id }).then((data) => {
         res.send(data);
     }).catch(err => {
         console.log(err);
@@ -42,7 +44,9 @@ const updateForm = async (req, res) => {
         country: req.body.country,
         pincode: req.body.pincode
     }
-    const formObject = await OrganizationForm.findByIdAndUpdate(req.params.formId, {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const formObject = await OrganizationForm.findOneAndUpdate({ admin_id: decoded.id }, {
         $set: formDetails
     }, {
         new: true,
@@ -64,7 +68,7 @@ const deleteForm = async (req, res) => {
 
 module.exports = {
     createAndSaveForm,
-    getByFormId,
+    getByAdminId,
     updateForm,
     deleteForm
 }
